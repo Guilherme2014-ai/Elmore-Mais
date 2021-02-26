@@ -12,7 +12,7 @@ require('./config/auth')(passport)
 
 // Session:
     app.use (session({
-        secret: 'curso de node',
+        secret: 'Elmore Mais',
         resave: true,
         saveUninitialized: true
 }))
@@ -23,10 +23,16 @@ require('./config/auth')(passport)
     app.use (flash())
 
 // Mongoose:
-    mongoose.connect('mongodb+srv://elmoremais:celso_bixa2014@elmoremais.lmnki.mongodb.net/elmoremais',{
-        useUnifiedTopology: true,
-        useNewUrlParser: true
+    const MongoClient = require('mongodb').MongoClient
+    const uri = "mongodb+srv://elmoremais:guilherme2014@elmoremais.qupnx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+
+    client.connect(err => {
+    const collection = client.db("test").collection("devices")
+    // perform actions on the collection object
+    client.close()
 })
+
 // Middleware:
     app.use((req, res, next) => {
         res.locals.user = req.user || null

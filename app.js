@@ -23,15 +23,15 @@ require('./config/auth')(passport)
     app.use (flash())
 
 // Mongoose:
-    const MongoClient = require('mongodb').MongoClient
-    const uri = "mongodb+srv://elmoremais:guilherme2014@elmoremais.qupnx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-
-    client.connect(err => {
-    const collection = client.db("test").collection("devices")
-    // perform actions on the collection object
-    client.close()
-})
+    mongoose.Promise = global.Promise
+    mongoose.connect("mongodb+srv://elmoremais:guilherme2014@elmoremais.qupnx.mongodb.net/elmoremais?retryWrites=true&w=majority", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => {
+        console.log('Mongoose Conectado !')
+    }).catch((err) => {
+        console.log(`${err}`)
+    })
 
 // Middleware:
     app.use((req, res, next) => {

@@ -23,7 +23,7 @@ require('./config/auth')(passport)
     app.use (flash())
 
 // Mongoose:
-    mongoose.connect('mongodb://localhost:27017/elmoremais',{
+    mongoose.connect('mongodb+srv://elmoremais:celso_bixa2014@elmoremais.lmnki.mongodb.net/elmoremais',{
         useUnifiedTopology: true,
         useNewUrlParser: true
 })

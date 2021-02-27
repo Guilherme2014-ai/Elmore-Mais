@@ -30,12 +30,13 @@
           <input type="hidden" value="<%= user.name %>" name="name">
 
           <h2>Fale oque Pense !</h2>
-          <textarea class="form-control" name="post" id="post" cols="30" rows="10" placeholder="So Tente Nao Ser Cancelado..."></textarea><br>
+          <textarea class="form-control" name="post" id="post" cols="30" rows="10" placeholder="So Tente Nao Ser Cancelado..." required></textarea><br>
           <button class="btn btn-outline-primary" type="submit">Publicar</button>
 
         </form><br><br><br>
 
-        <% for(posts of posts){ %> 
+        <% for(posts of posts){ %>
+          <% var cancelamentos = 0 %>  
           <div class="card">
             <div class="card card-body">
               <h3><%= posts.name %> </h3><hr>
@@ -45,15 +46,16 @@
               <input type="hidden" name="origin" value="<%= posts._id %>">
               <input type="hidden" name="name" value="<%= user.name %>">
 
-              <input type="text" style="width: 40%;" class="form-control" name="text" id="text" placeholder="O Motivo do Cancelamento ..." required> <p style="text-align: end;">1❌</p> <button style="position: relative; width: 124px;" class="btn btn-outline-danger" type="submit">Cancele-o ❌</button><hr>
+              <input type="text" style="width: 40%;" class="form-control" name="text" id="text" placeholder="O Motivo do Cancelamento ..." required> <br> <button style="position: relative; width: 124px;" class="btn btn-outline-danger" type="submit">Cancele-o ❌</button><hr>
               </form>
 
               <small>Comentarios:</small><br>
               
-              <% comentarios.forEach((item) => { %> 
-                
-                <% if(item.origin == posts._id){ %>
+              <% comentarios.forEach((item) => { %>
 
+                <% if(item.origin == posts._id){ %>
+                  <% cancelamentos++ %> 
+                
                     <div style="border: black solid 1px; padding: 4px; border-radius: 5px; box-shadow: rgb(177, 176, 176) 2px 5px 7px;">
 
                     <small> <strong> <%= item.name %> </strong> </small><br>
@@ -64,7 +66,7 @@
                 <% }else{} %>
 
               <% }) %> 
-
+              <p style="text-align: end;"><%= cancelamentos %> ❌</p>
             </div>
           </div><br><br><br>
          <% } %>

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 
 require('../models/users')
-const user = mongoose.model('user')
+const userM = mongoose.model('user')
 
 require('../models/posts')
 const post = mongoose.model('post')
@@ -22,7 +22,7 @@ Router.post('/cadastro', (req, res) => {
         password: req.body.password
     }
     
-    new user(newuser).save().then(() => {
+    new userM(newuser).save().then(() => {
         res.redirect('/login')
     }).catch((err) => {
         console.log(err)
@@ -44,7 +44,6 @@ Router.post('/login',(req, res, next) => {
 Router.get('/home', (req, res) => {
     post.find().sort({date: 'desc'}).then((post) => {
         comentario.find().then((comentarios) => {
-            console.log(comentarios)
             res.render('home', {posts: post, comentarios: comentarios})
         }).catch((err) => {
             console.log(err)
@@ -55,15 +54,23 @@ Router.get('/home', (req, res) => {
     })
 })
 
-/*
+Router.get('/:id',(req, res) => {
+    const _id = req.params.id
+    userM.findById({_id: _id}).then((user) => {
 
-function eachcomentario (id){
-                post.find({origin: id}).then((post) => {
-                    return 
-                })
-            }
+        console.log('user: '+user)
 
-*/
+        post.find({origin: user.email}).then((posts) => {
+            console.log(`Posts From NAME: `+ posts)
+            res.render('user', {posts: posts})
+        }).catch((err) =>{
+            console.log(err)
+        })
+
+    }).catch((err) => {
+        console.log(`Erro ao achar usuario: ${err}`)
+    })
+})
 
 Router.post('/post', (req, res) => {
     const newpost = {

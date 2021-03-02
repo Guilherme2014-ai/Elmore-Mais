@@ -1,6 +1,8 @@
 const Router = require('express').Router()
 const mongoose = require('mongoose')
 const passport = require('passport')
+const {eAuthenticated} = require('../helpers/eAuthenticated')
+const {notAuthenticatedad} = require('../helpers/notAuthenticated')
 
 require('../models/users')
 const userM = mongoose.model('user')
@@ -11,7 +13,7 @@ const post = mongoose.model('post')
 require('../models/comentarios')
 const comentario = mongoose.model('comentario')
 
-Router.get('/cadastro', (req, res) => {
+Router.get('/cadastro', eAuthenticated, (req, res) => {
     res.render('cadastro')
 })
 
@@ -29,7 +31,7 @@ Router.post('/cadastro', (req, res) => {
     })
 })
 
-Router.get('/login', (req, res) => {
+Router.get('/login', eAuthenticated, (req, res) => {
     res.render('login')
 })
 
@@ -41,9 +43,9 @@ Router.post('/login',(req, res, next) => {
     })(req, res, next)
 })
 
-Router.get('/home', (req, res) => {
+Router.get('/home', notAuthenticatedad, (req, res) => {
     post.find().sort({date: 'desc'}).then((post) => {
-        comentario.find().then((comentarios) => {
+        comentario.find().sort({date: 'desc'}).then((comentarios) => {
             res.render('home', {posts: post, comentarios: comentarios})
         }).catch((err) => {
             console.log(err)
@@ -52,6 +54,11 @@ Router.get('/home', (req, res) => {
     }).catch((err) => {
         console.log(err)
     })
+})
+
+Router.post('/logout',(req, res) => {
+    req.logout()
+    res.redirect('/login')
 })
 
 Router.get('/:id',(req, res) => {

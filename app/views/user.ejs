@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elmore Mais</title>
+</head>
+<body style="background: linear-gradient(to right, rgb(168, 149, 149), #a7a8aa, #a6b3a9 );">
+  <nav style="padding: 5px;" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/home">Elmore Mais</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="<%= user._id %>"><%= user.name %></a>
+        </li>
+      </ul>
+    </div>
+      <form action="" method="POST" style="margin-right: 14px;">
+
+      <input style="width: 200px; height: 34px; border-radius: 3px;" type="text" name="search" id="search"> <button style="margin-bottom:4px;" class="btn btn-success">Search</button>
+
+      </form>
+  </nav>
+
+  <section style="margin: 40px;">
+    <h1><%= user.name %></h1>
+    <small><%= user.email %> </small><hr><br>
+
+    <p><Strong>Seus Posts:</Strong></p>
+    
+    <% posts.forEach((item) => { %> 
+        
+            <div style="background: linear-gradient(to right, rgb(207, 195, 195), #ced3dd, #ddece1 );" class="card">
+                <div class="card-body">
+                    <h3><%= item.name %></h3><hr>
+                    <p><%= item.text %></p>
+                </div>
+            </div><br><br>
+
+      <% }) %> 
+
+  </section>
+
+  </body>

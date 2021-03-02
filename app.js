@@ -4,7 +4,7 @@ const routes = require('./app/routes/index')
 const mongoose = require('mongoose')
 const path = require('path')
 const session = require('express-session')
-const flash = require('flash')
+const flash = require('connect-flash')
 
 const passport = require('passport')
 require('./config/auth')(passport)

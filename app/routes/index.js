@@ -56,19 +56,16 @@ Router.get('/home', notAuthenticatedad, (req, res) => {
     })
 })
 
-Router.post('/logout',(req, res) => {
-    req.logout()
+Router.get('/logout',(req, res) => {
+    req.logOut()
     res.redirect('/login')
 })
 
-Router.get('/:id',(req, res) => {
+Router.get('/user/:id', notAuthenticatedad,(req, res) => {
     const _id = req.params.id
     userM.findById({_id: _id}).then((user) => {
 
-        console.log('user: '+user)
-
         post.find({origin: user.email}).then((posts) => {
-            console.log(`Posts From NAME: `+ posts)
             res.render('user', {posts: posts})
         }).catch((err) =>{
             console.log(err)

@@ -1,8 +1,13 @@
+const app = require('../../config/server')
 const Router = require('express').Router()
 const mongoose = require('mongoose')
 const passport = require('passport')
+const CryptoJS = require('crypto-js')
 const {eAuthenticated} = require('../helpers/eAuthenticated')
 const {notAuthenticatedad} = require('../helpers/notAuthenticated')
+
+const keyHash = '2014'
+app.set('keyHash', keyHash)
 
 require('../models/users')
 const userM = mongoose.model('user')
@@ -18,10 +23,12 @@ Router.get('/cadastro', eAuthenticated, (req, res) => {
 })
 
 Router.post('/cadastro', (req, res) => {
+    const Hash = CryptoJS.AES.encrypt(req.body.password, keyHash).toString()
+
     const newuser = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: Hash
     }
     
     new userM(newuser).save().then(() => {
@@ -100,6 +107,23 @@ Router.post('/comentarios', (req, res) => {
         res.redirect('/home')
     }).catch((err) => {
         console.log(err)
+    })
+})
+
+Router.post('/result', (req, res) => {
+    const name = req.body.name
+
+    
+    userM.find({name: name}).then((name) => {
+        res.render('result', {result: name})
+    })
+})
+
+Router.get('/perfil/:id', (req, res) => {
+    userM.findById(req.params.id).then((user) => {
+        post.find({origin: user.email}).then((posts) => {
+            res.render('search', {userM: user, posts: posts})
+        })
     })
 })
 

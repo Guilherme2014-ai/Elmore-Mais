@@ -18,6 +18,10 @@ const post = mongoose.model('post')
 require('../models/comentarios')
 const comentario = mongoose.model('comentario')
 
+app.get('/', (req, res) => {
+    res.redirect('/cadastro')
+})
+
 Router.get('/cadastro', eAuthenticated, (req, res) => {
     res.render('cadastro')
 })

@@ -24,7 +24,7 @@ require('./config/auth')(passport)
 
 // Mongoose:
     mongoose.Promise = global.Promise
-    mongoose.connect("mongodb+srv://elmoremais:guilherme2014@elmoremais.qupnx.mongodb.net/elmoremais?retryWrites=true&w=majority", {
+    mongoose.connect("mongodb://localhost:27017/game", {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => {

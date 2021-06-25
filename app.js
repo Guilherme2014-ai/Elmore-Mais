@@ -41,6 +41,6 @@ require('./config/auth')(passport)
 
 app.use('/', routes)
 
-app.listen(PORT, () => {
-    console.log('Running on Port: '+PORT)
+app.listen(PORT, (err) => {
+    err ? console.error(err) : console.log(`Running on Port: ${PORT}`)
 })
